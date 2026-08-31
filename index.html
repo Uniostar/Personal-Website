@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Aryan Kumar — electrical and computer engineering portfolio." />
+  <link rel="icon" href="Images/favicon.png" />
+  <title>Aryan Kumar — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .ambient-art,
+    .hero-art {
+      pointer-events: none;
+      overflow: hidden
+    }
+
+    .ambient-art {
+      position: fixed;
+      z-index: 0;
+      inset: 0;
+      opacity: .13;
+      background: radial-gradient(circle 260px at 9% 38%, transparent 0 97%, #777 98% 98.3%, transparent 99%), repeating-linear-gradient(90deg, transparent 0 88px, rgba(150, 150, 150, .3) 89px 90px, transparent 91px 178px), repeating-linear-gradient(0deg, transparent 0 88px, rgba(150, 150, 150, .2) 89px 90px, transparent 91px 178px);
+      mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent)
+    }
+
+    .hero-art {
+      position: absolute;
+      inset: 0;
+      opacity: .34
+    }
+
+    .hero-art .globe {
+      position: absolute;
+      width: min(40vw, 540px);
+      height: min(40vw, 540px);
+      right: -9vw;
+      bottom: -17vw;
+      border: 1px solid #747474;
+      border-radius: 50%;
+      background: repeating-radial-gradient(ellipse at 50% 50%, transparent 0 42px, #737373 43px 44px, transparent 45px 74px), repeating-linear-gradient(90deg, transparent 0 57px, #666 58px 59px, transparent 60px 114px)
+    }
+
+    .hero-art .circuit {
+      position: absolute;
+      left: 5%;
+      bottom: 15%;
+      width: 28vw;
+      height: 20vw;
+      border-top: 1px solid #777;
+      border-right: 1px solid #777;
+      background: linear-gradient(90deg, transparent 49.5%, #777 50% 50.5%, transparent 51%), linear-gradient(0deg, transparent 49.5%, #777 50% 50.5%, transparent 51%);
+      opacity: .45
+    }
+
+    .hero-art .circuit:before,
+    .hero-art .circuit:after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border: 1px solid #999;
+      border-radius: 50%;
+      background: #0a0a0a
+    }
+
+    .hero-art .circuit:before {
+      right: -5px;
+      top: -5px
+    }
+
+    .hero-art .circuit:after {
+      left: 49%;
+      bottom: -5px
+    }
+
+    .skills-marquee {
+      top: auto;
+      bottom: 8%;
+      z-index: 2;
+      padding: 13px 0;
+      color: rgba(245, 245, 243, .75)
+    }
+
+    .marquee-track {
+      animation-duration: 32s
+    }
+
+    .hero-role {
+      margin-top: 42px;
+      letter-spacing: .02em
+    }
+
+    .custom-cursor {
+      transition: width .14s, height .14s, background .14s
+    }
+
+    .hero-copy {
+      position: relative
+    }
+
+    .hero-portrait {
+      position: relative;
+      z-index: 1
+    }
+
+    .page-content {
+      transition: filter .35s ease
+    }
+
+    .modal-open .page-content {
+      filter: blur(9px);
+      pointer-events: none
+    }
+
+    .project-modal {
+      position: fixed;
+      z-index: 30;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: rgba(10, 10, 10, .55);
+      opacity: 0;
+      visibility: hidden;
+      transition: .3s
+    }
+
+    .project-modal.open {
+      opacity: 1;
+      visibility: visible
+    }
+
+    .modal-card {
+      position: relative;
+      width: min(760px, 100%);
+      max-height: min(82vh, 850px);
+      overflow: auto;
+      background: #171717;
+      border: 1px solid rgba(245, 245, 243, .17);
+      padding: clamp(30px, 6vw, 70px);
+      transform: translateY(22px);
+      transition: transform .35s cubic-bezier(.16, 1, .3, 1)
+    }
+
+    .project-modal.open .modal-card {
+      transform: none
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 17px;
+      right: 18px;
+      border: 0;
+      background: transparent;
+      color: #f5f5f3;
+      font: 24px/1 var(--sans);
+      cursor: pointer
+    }
+
+    .modal-kicker {
+      color: #8a8a88;
+      font-size: 10px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin: 0
+    }
+
+    .modal-title {
+      font: 500 clamp(42px, 7vw, 74px)/.92 var(--serif);
+      letter-spacing: -.06em;
+      margin: 15px 0 44px
+    }
+
+    .modal-section {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 20px;
+      padding: 20px 0;
+      border-top: 1px solid rgba(245, 245, 243, .1)
+    }
+
+    .modal-section h3 {
+      font: 500 13px/1.2 var(--sans);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin: 0
+    }
+
+    .modal-section p {
+      color: #c6c6c2;
+      font-size: 15px;
+      margin: 0
+    }
+
+    @media(max-width:800px) {
+      .skills-marquee {
+        bottom: 3%
+      }
+
+      .hero-art .globe {
+        width: 70vw;
+        height: 70vw;
+        right: -26vw;
+        bottom: 5vw
+      }
+
+      .hero-art .circuit {
+        width: 45vw;
+        height: 31vw;
+        bottom: 19%;
+        left: -8%
+      }
+
+      .modal-section {
+        grid-template-columns: 1fr;
+        gap: 7px
+      }
+
+      .modal-card {
+        padding: 55px 28px 30px
+      }
+    }
+
+    button.text-link {
+      background: transparent;
+      border: 0;
+      border-bottom: 1px solid currentColor;
+      padding: 0 0 5px;
+      cursor: pointer;
+      font: inherit
+    }
+
+    @media (min-width: 801px) {
+      .project {
+        grid-template-columns: 4fr 7fr !important
+      }
+
+      .project-flip {
+        grid-template-columns: 7fr 4fr !important
+      }
+    }
+
+    .photo-box {
+      display: block
+    }
+
+    .photo-box img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover
+    }
+
+    .profile-photo {
+      width: min(37vw, 510px);
+      height: min(37vw, 510px);
+      min-height: 0;
+      border-radius: 50%;
+      clip-path: circle(50%);
+      overflow: hidden;
+      justify-self: center
+    }
+
+    @media (max-width: 800px) {
+      .profile-photo {
+        width: min(62vw, 340px);
+        height: min(62vw, 340px);
+        margin: 0 auto;
+      }
+    }
+
+    .profile-photo img {
+      border-radius: 50%;
+      clip-path: circle(50%);
+      object-fit: cover;
+      transform: scale(.9)
+    }
+
+    .bell-photo img {
+      object-position: calc(50% - 90px) center
+    }
+  </style>
+</head>
+
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="ambient-art" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
+  <div class="custom-cursor" aria-hidden="true"></div>
+  <header class="site-header" aria-label="Primary navigation">
+    <a class="monogram" href="#top" aria-label="Back to top">AK</a>
+    <nav>
+      <a href="#about">About</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a
+        href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top" class="page-content">
+    <section class="hero section-shell">
+      <div class="hero-art" aria-hidden="true">
+        <div class="globe"></div>
+        <div class="circuit"></div>
+      </div>
+      <div class="skills-marquee" aria-label="Technical skills">
+        <div class="marquee-track">
+          <span>JAVA&nbsp;&nbsp;&nbsp;&nbsp;PYTHON&nbsp;&nbsp;&nbsp;&nbsp;C/C++&nbsp;&nbsp;&nbsp;&nbsp;C#&nbsp;&nbsp;&nbsp;&nbsp;JAVASCRIPT&nbsp;&nbsp;&nbsp;&nbsp;HTML/CSS&nbsp;&nbsp;&nbsp;&nbsp;LINUX&nbsp;&nbsp;&nbsp;&nbsp;DOCKER&nbsp;&nbsp;&nbsp;&nbsp;GIT&nbsp;&nbsp;&nbsp;&nbsp;UNITY&nbsp;&nbsp;&nbsp;&nbsp;DJANGO&nbsp;&nbsp;&nbsp;&nbsp;FREERTOS&nbsp;&nbsp;&nbsp;&nbsp;RASPBERRY
+            PI&nbsp;&nbsp;&nbsp;&nbsp;JETSON
+            NANO&nbsp;&nbsp;&nbsp;&nbsp;CAN&nbsp;&nbsp;&nbsp;&nbsp;SPI&nbsp;&nbsp;&nbsp;&nbsp;I2C&nbsp;&nbsp;&nbsp;&nbsp;UART&nbsp;&nbsp;&nbsp;&nbsp;AES-256&nbsp;&nbsp;&nbsp;&nbsp;</span><span
+            aria-hidden="true">JAVA&nbsp;&nbsp;&nbsp;&nbsp;PYTHON&nbsp;&nbsp;&nbsp;&nbsp;C/C++&nbsp;&nbsp;&nbsp;&nbsp;C#&nbsp;&nbsp;&nbsp;&nbsp;JAVASCRIPT&nbsp;&nbsp;&nbsp;&nbsp;HTML/CSS&nbsp;&nbsp;&nbsp;&nbsp;LINUX&nbsp;&nbsp;&nbsp;&nbsp;DOCKER&nbsp;&nbsp;&nbsp;&nbsp;GIT&nbsp;&nbsp;&nbsp;&nbsp;UNITY&nbsp;&nbsp;&nbsp;&nbsp;DJANGO&nbsp;&nbsp;&nbsp;&nbsp;FREERTOS&nbsp;&nbsp;&nbsp;&nbsp;RASPBERRY
+            PI&nbsp;&nbsp;&nbsp;&nbsp;JETSON
+            NANO&nbsp;&nbsp;&nbsp;&nbsp;CAN&nbsp;&nbsp;&nbsp;&nbsp;SPI&nbsp;&nbsp;&nbsp;&nbsp;I2C&nbsp;&nbsp;&nbsp;&nbsp;UART&nbsp;&nbsp;&nbsp;&nbsp;AES-256&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        </div>
+      </div>
+      <div class="hero-copy reveal">
+        <p class="eyebrow">Portfolio · 2026</p>
+        <h1>Aryan<br />Kumar<span class="period">.</span></h1>
+        <p class="hero-role">Electrical &amp; computer<br />engineering.</p>
+      </div>
+      <div class="hero-portrait image-placeholder photo-box profile-photo"><img src="Images/Profile.jpg"
+          alt="Portrait of Aryan Kumar" /></div>
+      <a class="scroll-cue" href="#about"><span>Scroll to explore</span><i aria-hidden="true"></i></a>
+    </section>
+
+    <section class="about section-shell" id="about">
+      <div class="section-index reveal"><span>01</span><span>Introduction</span></div>
+      <div class="about-content reveal">
+        <p class="eyebrow">About me</p>
+        <h2>I like hard problems with real-world consequences.</h2>
+        <div class="about-body">
+          <p class="lead">Hi, I'm Aryan — part engineer, part storyteller, and part “let's see if this works”
+            experimenter. I've spent the last few years building everything from Bluetooth gadgets to tiny ion engines
+            (yes, they work… mostly), and explaining them in a way that doesn't require a PhD or three cups of coffee.
+          </p>
+          <p>When I'm not writing technical guides for Hackster.io or Arduino, you'll probably find me tinkering with
+            Java code, designing user interfaces, or running a club meeting that somehow turns into a brainstorm about
+            rockets. I love mixing tech skills (UI/UX design, embedded systems, Java development) with people skills
+            (leadership, outreach, making complex things simple).</p>
+          <p>I like solving problems, teaching others, and occasionally making robots do my bidding. If it beeps,
+            blinks, or launches into the sky, I'm interested.</p>
+        </div>
+      </div>
+      <dl class="facts reveal">
+        <div>
+          <dt>Focus</dt>
+          <dd>Aerospace systems<br />Embedded hardware</dd>
+        </div>
+        <div>
+          <dt>Currently</dt>
+          <dd>Building at the edge of<br />flight &amp; electronics</dd>
+        </div>
+        <div>
+          <dt>Based in</dt>
+          <dd>Texas, United States</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="experience" id="experience" aria-labelledby="experience-title">
+      <div class="experience-heading section-shell reveal">
+        <div class="section-index"><span>02</span><span>Selected experience</span></div>
+        <h2 id="experience-title">In practice.</h2>
+      </div>
+      <article class="experience-card section-shell">
+        <div class="experience-image image-placeholder parallax photo-box bell-photo"><img src="Images/Bell.webp"
+            alt="Bell Textron flight-test equipment" /></div>
+        <div class="experience-copy reveal">
+          <p class="eyebrow">06/2026 — 08/2026 · Fort Worth, TX</p>
+          <h3>Bell Textron</h3>
+          <p class="role">Instrumentation Engineering Intern</p>
+          <ul>
+            <li>Architected and integrated an RF telemetry network for flight test operations, delivering four real-time
+              HD video streams and doubling data downlink throughput.</li>
+            <li>Developed remote access for aircraft instrumentation systems over RF, expanding flight test capability.
+            </li>
+            <li>Implemented secure AES-256 telemetry communications to meet US Army standards.</li>
+          </ul>
+        </div>
+      </article>
+      <article class="experience-card reverse section-shell">
+        <div class="experience-image image-placeholder parallax photo-box"><img src="Images/TSL.jpg"
+            alt="Texas Spacecraft Laboratory team and equipment" /></div>
+        <div class="experience-copy reveal">
+          <p class="eyebrow">09/2025 — Present · Austin, TX</p>
+          <h3>Texas Spacecraft Lab</h3>
+          <p class="role">Flight Software Engineer</p>
+          <ul>
+            <li>Developed C/C++ software integrating external CAN driver libraries into NASA’s satellite framework for
+              real-time distributed power-unit telemetry.</li>
+            <li>Implemented Docker cross-compilation for ARM-Linux, eliminating environment-specific build issues.</li>
+            <li>Built an automated NASA systems-engineering training tool that reduced ramp-up time by 15%.</li>
+          </ul>
+        </div>
+      </article>
+      <article class="experience-card section-shell">
+        <div class="experience-image image-placeholder parallax photo-box"><img src="Images/VEX-U.jpg"
+            alt="VEX U robotics work at UT Austin" /></div>
+        <div class="experience-copy reveal">
+          <p class="eyebrow">09/2025 — 03/2026 · Austin, TX</p>
+          <h3>VEX U @ UT Austin</h3>
+          <p class="role">Robotics Software Developer</p>
+          <ul>
+            <li>Implemented a YOLO-based computer-vision pipeline in Python on an NVIDIA Jetson Nano for real-time
+              game-object detection and autonomous decisions.</li>
+            <li>Tuned PID control loops to reduce drivetrain oscillations and improve autonomous path tracking.</li>
+          </ul>
+        </div>
+      </article>
+    </section>
+
+    <section class="projects section-shell" id="projects" aria-labelledby="projects-title">
+      <div class="projects-heading reveal">
+        <div class="section-index"><span>03</span><span>Selected projects</span></div>
+        <h2 id="projects-title">Things I’ve made.</h2>
+      </div>
+      <article class="project reveal">
+        <div class="project-meta">
+          <p class="eyebrow">01 / Remote Telemetry</p>
+          <h3>V-TEL<br />Telemetry Board</h3>
+          <p class="project-lede">A 4-layer ESP32 telemetry PCB for RC planes, selected by PCBWay engineers for full
+            sponsorship.</p>
+          <p class="project-detail">Designed in KiCad to capture camera feed, IMU, GPS, and environmental data to SD
+            card. Interrupt-driven C/C++ firmware eliminated sampling aliasing, while a Python engine reconstructed 3D
+            flight paths from sensor logs.</p>
+          <p class="tech">ESP32 · C/C++ · KiCad · Python · GPS · IMU</p>
+          <p class="project-link"><a
+              href="https://www.hackster.io/Uniostar/esp32-rc-plane-camera-flight-recorder-with-dashboard-190085"
+              target="_blank" rel="noreferrer">See Article
+              here <span>↗</span></a></p>
+          <button class="text-link write-up-trigger" data-project="vtel">View Summary<span>↗</span></button>
+        </div>
+        <div class="collage collage-a">
+          <div class="image-placeholder project-photo large">
+            <img src="Images/VTEL-1.jpg" alt="V-TEL telemetry board" style="transform: scale(0.2);" />
+          </div>
+          <div class="image-placeholder project-photo top" role="img">
+            <img src="Images/VTEL-2.png" alt="V-TEL telemetry board" style="transform: scale(0.3);" />
+          </div>
+          <div class="image-placeholder project-photo bottom" role="img">
+            <img src="Images/VTEL-3.gif" alt="V-TEL telemetry board" style="transform: scale(0.4);" />
+          </div>
+        </div>
+      </article>
+      <article class="project project-flip reveal">
+        <div class="project-meta">
+          <p class="eyebrow">02 / Hiker Safety</p>
+          <h3>SIGMA<br />Wearable</h3>
+          <p class="project-lede">Hiker assistance wearable device. 1st Place, IEEE Tech-A-Thon.</p>
+          <p class="project-detail">Engineered an end-to-end RF mesh network for hiker SOS signaling in rugged terrain.
+            Reduced packet loss by 50% with parity checks, extended range 10× with a 20 dBm amplifier, and built a
+            companion website for live first-responder monitoring.</p>
+          <p class="tech">RF mesh · ESP32 · Parity checks · Wi-Fi · Web</p>
+          <p class="project-link"><a href="https://github.com/AthM23/S.I.G.M.A" target="_blank" rel="noreferrer">Github
+              <span>↗</span></a></p>
+          <button class="text-link write-up-trigger" data-project="sigma">View Summary<span>↗</span></button>
+        </div>
+        <div class="collage collage-b">
+          <div class="image-placeholder project-photo wide" role="img">
+            <img src="Images/Sigma-2.jpg" alt="SIGMA Hiker Safety" style="transform: scale(0.1);" />
+          </div>
+          <div class="image-placeholder project-photo left" role="img">
+            <img src="Images/Sigma-1.JPEG" alt="SIGMA Hiker Safety" style="transform: scale(0.11);" />
+          </div>
+          <div class="image-placeholder project-photo right" role="img">
+            <img src="Images/Sigma-3.jpg" alt="SIGMA Hiker Safety" style="transform: scale(0.11);" />
+          </div>
+        </div>
+      </article>
+      <article class="project reveal">
+        <div class="project-meta">
+          <p class="eyebrow">03 / Low-level computing</p>
+          <h3>DOOM on an<br />ARM MCU</h3>
+          <p class="project-lede">Getting an unlikely classic to run on a very small computer.</p>
+          <p class="project-detail">A deep dive into memory limits, display drivers, and low-level optimization. With a
+            99% memory utilization
+            and 2 GB of additional sounds on an SD card, the result is a playful proof of what careful systems work can
+            make possible.</p>
+          <p class="tech">ARM · C · SPI display · Bare metal · SD Card</p>
+          <button class="text-link write-up-trigger" type="button" data-project="doom">View Summary
+            <span>↗</span></button>
+        </div>
+        <div class="collage collage-c">
+          <div class="image-placeholder project-photo tall" role="img">
+            <img src="Images/Doom-2.JPG" alt="3d Doom" style="transform: scale(0.15);" />
+          </div>
+          <div class="image-placeholder project-photo upper" role="img">
+            <img src="Images/Doom-1.jpg" alt="3d Doom" style="transform: scale(0.08);" />
+          </div>
+          <div class="image-placeholder project-photo lower" role="img">
+            <img src="Images/Doom-3.webp" alt="3d Doom" style="transform: scale(0.38);" />
+          </div>
+        </div>
+      </article>
+      <article class="project project-flip reveal">
+        <div class="project-meta">
+          <p class="eyebrow">04 / Power electronics</p>
+          <h3>Buck<br />Converter</h3>
+          <p class="project-lede">A custom DC-DC power stage, from simulation through bench validation.</p>
+          <p class="project-detail placeholder-copy">I simulated a synchronous dual-MOSFET topology against a
+            diode-based design and chose it for the 10% efficiency gain, landing on 5 A continuous at over 90%
+            efficiency. I built the feedback loop around a TLV2372 error amplifier for stable regulation, then laid out
+            the PCB myself — adding thermal relief vias and sizing the inductor and output capacitor to control
+            switching ripple.
+          </p>
+          <p class="tech">Component selection · Simulation · PCB · Oscilloscope</p>
+          <button class="text-link write-up-trigger" type="button" data-project="buck">View Summary
+            <span>↗</span></button>
+        </div>
+        <div class="collage collage-d">
+          <div class="image-placeholder project-photo wide" role="img">
+            <img src="Images/Buck-1.png" alt="Buck Converter" style="transform: scale(0.30);" />
+          </div>
+          <div class="image-placeholder project-photo left" role="img">
+            <img src="Images/Buck-2.png" alt="Buck Converter" style="transform: scale(0.45);" />
+          </div>
+          <div class="image-placeholder project-photo right" role="img">
+            <img src="Images/Buck-3.png" alt="Buck Converter" style="transform: scale(0.35);" />
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="contact section-shell" id="contact">
+      <div class="section-index reveal"><span>04</span><span>Contact</span></div>
+      <div class="contact-main reveal">
+        <p class="eyebrow">Have an idea?</p>
+        <h2>Let’s build<br />something<span class="period">.</span></h2>
+        <div class="contact-links"><a href="https://github.com/" target="_blank" rel="noreferrer">GitHub
+            <span>↗</span></a><a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">LinkedIn
+            <span>↗</span></a><a href="mailto:hello@example.com">Email <span>↗</span></a></div>
+      </div>
+      <footer>© 2026 Aryan Kumar <span>Designed with intention.</span></footer>
+    </section>
+  </main>
+  <div class="project-modal" id="project-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <article class="modal-card"><button class="modal-close" type="button" aria-label="Close project write-up">×</button>
+      <p class="modal-kicker" id="modal-kicker">Project write-up</p>
+      <h2 class="modal-title" id="modal-title"></h2>
+      <div class="modal-section">
+        <h3>What?</h3>
+        <p id="modal-what"></p>
+      </div>
+      <div class="modal-section">
+        <h3>How?</h3>
+        <p id="modal-how"></p>
+      </div>
+      <div class="modal-section">
+        <h3>Results</h3>
+        <p id="modal-results"></p>
+      </div>
+    </article>
+  </div>
+  <script src="script.js"></script>
+</body>
+
+</html>
